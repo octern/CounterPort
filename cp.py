@@ -25,7 +25,9 @@ def read_transactions(transactions):
 debug = 0
 #symbols = [sys.argv[0]]
 
-symbols = ["F"]
+symbols = ["DJIA"]
+
+symbol = symbols[0]
 
 #pdb.set_trace()
 operations = {}
@@ -38,7 +40,7 @@ for d in sorted(operations.keys()):
 prices = {}
 for date in dateList:
 	prices[date] = dp.download_one_price(date=date, symbol=symbols[0])[0]
-	print("{}: {}, {}".format(date.strftime("%Y-%m-%d"), round(prices[date], 2), round(operations[date])))
+#	print("{}: {}, {}".format(date.strftime("%Y-%m-%d"), round(prices[date], 2), round(operations[date])))
 
 cpValues = {}
 cpValues[dateList[0]] = round(operations[dateList[0]])
@@ -62,7 +64,8 @@ endValue = cpValues[dateList[-1]]
 growth = round(endValue - startValue)
 growthProp = round(endValue / startValue, 2)
 ops = sum(operations.values()) - operations[dateList[0]]
-print("start value {}: ".format(dateList[0].strftime("%Y-%m-%d")), startValue)
-print("final value {}: ".format(dateList[-1].strftime("%Y-%m-%d")), endValue)
-print("growth factor: {}".format(growthProp))
-print("inputs/outputs: {} ({} of total growth)".format(round(ops), round(ops/growth, 2)))
+print("counterfactual portfolio: {}".format(symbol))
+print("start value {}: {:,}".format(dateList[0].strftime("%Y-%m-%d"), startValue))
+print("final value {}: {:,}".format(dateList[-1].strftime("%Y-%m-%d"), endValue))
+print("growth factor: {:.0%}".format(growthProp))
+print("inputs/outputs: {:,} ({:.0%} of total growth)".format(round(ops), round(ops/growth, 2)))
