@@ -19,15 +19,19 @@ def read_transactions(transactions):
 			operations[ts] = operations[ts]+val
 		else:
 			operations[ts] = val
-		operations[datetime.datetime.now().date() - datetime.timedelta(days=3)] = 0
+	daysback = 3
+	if datetime.datetime.now().date().weekday() in [1,2]:
+		daysback = 5
+	lastday = datetime.datetime.now().date() - datetime.timedelta(days=daysback)
+	operations[lastday] = 0
 	return operations
 
 debug = 0
-#symbols = [sys.argv[0]]
 
-symbols = ["DJIA"]
+#symbol = "VNQ"
+symbol = sys.argv[1]
 
-symbol = symbols[0]
+
 
 #pdb.set_trace()
 operations = {}
@@ -39,7 +43,8 @@ for d in sorted(operations.keys()):
 
 prices = {}
 for date in dateList:
-	prices[date] = dp.download_one_price(date=date, symbol=symbols[0])[0]
+#	if date==dateList[-1]: pdb.set_trace()
+	prices[date] = dp.download_one_price(date=date, symbol=symbol)[0]
 #	print("{}: {}, {}".format(date.strftime("%Y-%m-%d"), round(prices[date], 2), round(operations[date])))
 
 cpValues = {}
