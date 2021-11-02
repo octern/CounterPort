@@ -22,7 +22,8 @@ def read_transactions(transactions):
 	daysback = 3
 	if datetime.datetime.now().date().weekday() in [1,2]:
 		daysback = 5
-	lastday = datetime.datetime.now().date() - datetime.timedelta(days=daysback)
+#	lastday = datetime.datetime.now().date() - datetime.timedelta(days=daysback)
+	lastday = datetime.datetime.strptime(sys.argv[2], "%Y-%m-%d").date()
 	operations[lastday] = 0
 	return operations
 
@@ -30,7 +31,7 @@ debug = 0
 
 #symbol = "VNQ"
 symbol = sys.argv[1]
-
+end_date = sys.argv[2]
 
 
 #pdb.set_trace()
