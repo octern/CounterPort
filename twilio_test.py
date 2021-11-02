@@ -1,4 +1,4 @@
-from twilio.rest import client
+from twilio.rest import Client
 import sys
 
 # Your Account SID from twilio.com/console
